@@ -1,15 +1,146 @@
 ﻿<!DOCTYPE html>
-<html>
+<html ng-app="player">
 <head>
     <title></title>
-	<meta charset="utf-8" />
+    <meta charset="utf-8" />
+
+    <link href="Content/bootstrap-theme.min.css" rel="stylesheet" />
+    <link href="Content/site.css" rel="stylesheet" />
+    <script src="Scripts/angular.min.js"></script>
+    <script src="Scripts/angular-route.min.js"></script>
+    <script>
+
+        var app = angular.module('player', []);
+        var players = [
+            new Player(1, 'Rod Hall', 'Male', '07/15/1985', 'Loose', null, 'rodhall@hotmail.co.uk', 'Description'),
+            new Player(2, 'Graham Parris', 'Male', '05/10/1980', 'Loose', null, null, 'Description'),
+            new Player(3, 'Sean "Twiggy" Twig', 'Male', '01/01/1950', 'Loose', '01733 354432', 'example@foo.com', 'Description'),
+            new Player(4, 'Neil Duff', 'Male', '10/08/1940', 'Tight', null, null, 'Description')
+        ];
+
+        app.controller('PlayerController', function ($scope) {
+            $scope.mode = 'list';
+            $scope.players = players;
+            $scope.addPlayer = function (player) {
+                $scope.players.push(new Player(player.id, player.name, player.sex, player.dob, player.style, player.telephone, player.email, player.description));
+                $scope.mode = 'list';
+            };
+        })
+
+        function Player(id, name, sex, dob, style, telephone, email, description) {
+            this.id = id;
+            this.name = name;
+            this.sex = sex;
+            this.dob = dob;
+            this.age = function (dateString) {
+                var today = new Date();
+                var birthDate = new Date(dateString);
+                var age = today.getFullYear() - birthDate.getFullYear();
+                var m = today.getMonth() - birthDate.getMonth();
+                if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+                    age--;
+                }
+                return age;
+            }
+            this.style = style;
+            this.telephone = telephone,
+            this.email = email,
+            this.description = description;
+        }
+
+
+    </script>
 </head>
 <body>
+    <div class="container body-content" ng-controller="PlayerController as playerCtrl">
 
+        <div ng-show="mode === 'list'">
 
+            <div class="container">
 
-    <script src="Scripts/jquery-1.9.1.min.js"></script>
-    <script src="Scripts/angular.min.js"></script>
-    <script src="Scripts/player.js"></script>
+                <div ng-click="mode = 'create'" class="btn btn-default">Create</div>
+
+                <div class="container panel panel-info player" ng-repeat="player in players">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">
+                            {{player.name}} - {{player.sex}} - {{player.age(player.dob)}}
+                        </h3>
+                        <a href="">
+                            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                        </a>
+                        <a href="">
+                            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                        </a>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <img src="" class="img-responsive" alt="{{player.name}}" />
+                            </div>
+                            <div class="col-lg-9">
+                                <div class="text-uppercase well">
+                                    {{player.style}}
+                                </div>
+                                <div class="well">
+                                    {{player.description}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div ng-show="mode === 'create'">
+            <div ng-click="mode = 'list'" class="btn btn-default">Players</div>
+
+            <div class="container">
+                <div class="row">
+                    <form name="newPlayer" class="form-horizontal" ng-submit="newPlayer.$isValid && addPlayer(player)">
+                        <h4>New Player</h4>
+                        <div class="col-md-4">
+                            <hr />
+                            <div class="form-group">
+                                <input class="form-control" type="text" ng-model="player.name" placeholder="Fullname" required />
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control" type="text" ng-model="player.sex" placeholder="Male/Female" required />
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control" type="date" ng-model="player.dob" placeholder="DD/MM/YYYY" />
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control" type="file" name="ImageData" id="ImageData" onchange="fileCheck(this);" />
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control" type="text" ng-model="player.style" placeholder="Player Style e.g. Loose Aggressive" />
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control" type="tel" ng-model="player.telephone" placeholder="01234567890" />
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control" type="email" ng-model="player.email" placeholder="name@example.com" />
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control" type="text" ng-model="player.description" placeholder="Player Description..." />
+                            </div>
+                            <div class="form-group">
+                                <input type="submit" value="Create" class="btn btn-default" />
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div>{{player.name}} - {{player.sex}} - {{player.age(player.dob)}}</div>
+
+                                </div>
+                                <div class="col-md-6">Picture</div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
