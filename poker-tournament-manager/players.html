@@ -8,6 +8,7 @@
     <link href="Content/site.css" rel="stylesheet" />
     <script src="Scripts/angular.min.js"></script>
     <script src="Scripts/angular-route.min.js"></script>
+    <script src="Scripts/jquery-1.9.1.min.js"></script>
     <script>
 
         var app = angular.module('player', []);
@@ -46,8 +47,20 @@
             this.telephone = telephone,
             this.email = email,
             this.description = description;
+            this.info = this.name + ' - ' + this.sex + ' - ' + this.age;
         }
 
+        function loadImage(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#player-image').attr('src', e.target.result);
+                };
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
 
     </script>
 </head>
@@ -60,7 +73,7 @@
 
                 <div ng-click="mode = 'create'" class="btn btn-default">Create</div>
 
-                <div class="container panel panel-info player" ng-repeat="player in players">
+                <div class="container panel panel-info no-padding" ng-repeat="player in players">
                     <div class="panel-heading">
                         <h3 class="panel-title">
                             {{player.name}} - {{player.sex}} - {{player.age(player.dob)}}
@@ -98,8 +111,8 @@
                 <div class="row">
                     <form name="newPlayer" class="form-horizontal" ng-submit="newPlayer.$isValid && addPlayer(player)">
                         <h4>New Player</h4>
+                        <hr />
                         <div class="col-md-4">
-                            <hr />
                             <div class="form-group">
                                 <input class="form-control" type="text" ng-model="player.name" placeholder="Fullname" required />
                             </div>
@@ -110,7 +123,7 @@
                                 <input class="form-control" type="date" ng-model="player.dob" placeholder="DD/MM/YYYY" />
                             </div>
                             <div class="form-group">
-                                <input class="form-control" type="file" name="ImageData" id="ImageData" onchange="fileCheck(this);" />
+                                <input class="form-control" type="file" ng-model="player.image" name="ImageData" id="ImageData" onchange="loadImage(this);" />
                             </div>
                             <div class="form-group">
                                 <input class="form-control" type="text" ng-model="player.style" placeholder="Player Style e.g. Loose Aggressive" />
@@ -124,20 +137,29 @@
                             <div class="form-group">
                                 <input class="form-control" type="text" ng-model="player.description" placeholder="Player Description..." />
                             </div>
-                            <div class="form-group">
-                                <input type="submit" value="Create" class="btn btn-default" />
-                            </div>
                         </div>
                         <div class="col-md-8">
                             <div class="row">
                                 <div class="col-md-6">
-                                    <div>{{player.name}} - {{player.sex}} - {{player.age(player.dob)}}</div>
-
+                                    <div class="panel panel-info">
+                                        <div class="panel-heading">
+                                            <h3 class="panel-title">{{player.name}} - {{player.sex}} - {{player.age}}</h3>
+                                        </div>
+                                        <div class="panel-body">
+                                            <div class="well">{{player.style}}</div>
+                                            <div class="well">{{player.description}}</div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="col-md-6">Picture</div>
+                                <div class="col-md-6">
+                                    <img id="player-image" class="img-responsive" src="" alt="{{player.name}}" />
+                                </div>
                             </div>
                         </div>
                     </form>
+                </div>
+                <div class="row">
+                    <input id="save-player" type="button" value="Save" class="btn btn-primary btn-lg btn-block margin-top-bottom no-padding" />
                 </div>
             </div>
         </div>

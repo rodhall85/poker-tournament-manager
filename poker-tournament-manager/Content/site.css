@@ -23,11 +23,15 @@ textarea {
     max-width: 280px;
 }
 
-.player {
+.margin-top-bottom {
+    padding:20px 0;
+}
+
+.no-padding {
     padding-left: 0!important;
     padding-right: 0!important; 
 }
 
-.player .panel-body {
+.no-padding .panel-body {
     padding: 0!important;
 }
