@@ -1,1 +1,4 @@
-*\suo
+packages
+/poker-tournament-manager/bin
+/poker-tournament-manager/obj
+.vs/*
