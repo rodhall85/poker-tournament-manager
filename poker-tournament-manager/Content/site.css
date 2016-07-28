@@ -16,6 +16,10 @@
     white-space: normal;
 }
 
+.margin-10 {
+    margin:20px;
+}
+
 .margin-top-bottom {
     padding:20px 0;
 }
@@ -35,4 +39,8 @@
 
 .pad-top-9 {
     padding-top:9px;
+}
+
+.bright-text {
+    color:#fff;
 }

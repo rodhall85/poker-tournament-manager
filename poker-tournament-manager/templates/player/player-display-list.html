@@ -1,0 +1,25 @@
+﻿<div class="panel-heading bg-info bright-text">
+    <h3 class="panel-title pull-left">
+        {{player.name}} - {{player.sex}} - {{player.dob | ageFilter}}
+    </h3>
+    <span class="pull-right">
+        <span class="glyphicon glyphicon-edit" aria-hidden="true" ng-click="mode = 'edit'"></span>
+        <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+    </span>
+    <div class="clearfix"></div>
+</div>
+<div class="panel-body">
+    <div class="row">
+        <div class="col-md-3">
+            <img ng-src="{{player.image}}" class="img-responsive" alt="{{player.name}}" />
+        </div>
+        <div class="col-lg-9">
+            <div class="text-uppercase well margin-10">
+                {{player.style}}
+            </div>
+            <div class="well margin-10">
+                {{player.description}}
+            </div>
+        </div>
+    </div>
+</div>
