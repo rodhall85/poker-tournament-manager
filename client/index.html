@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html ng-app="ptm">
+  <head>
+    <meta charset="utf-8">
+    <title>Poker Tournament Manager</title>
+  </head>
+  <body>
+    <h1>Poker Tournament Manager</h1>
+
+    <div ng-controller="playerController as playerCtrl">
+      <div ng-repeat="player in playerCtrl.players">
+        <p>{{player.name}}</p>
+      </div>
+    </div>
+
+    <script src="./dist/bundle.js" charset="utf-8"></script>
+  </body>
+</html>
