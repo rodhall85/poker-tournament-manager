@@ -3,16 +3,28 @@
   <head>
     <meta charset="utf-8">
     <title>Poker Tournament Manager</title>
+
+    <link rel="stylesheet" href="./dist/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="./content/ptm.css">
+
   </head>
   <body>
     <h1>Poker Tournament Manager</h1>
 
     <div ng-controller="playerController as playerCtrl">
-      <div ng-repeat="player in playerCtrl.players">
-        <p>{{player.name}}</p>
+
+      <div ng-show="mode === 'list'">
+        <list-players></list-players>
       </div>
+
+      <div ng-show="mode === 'create'">
+        <create-player></create-player>
+      </div>
+
     </div>
 
+
+    <script src="./dist/jquery.min.js" charset="utf-8"></script>
     <script src="./dist/bundle.js" charset="utf-8"></script>
   </body>
 </html>
