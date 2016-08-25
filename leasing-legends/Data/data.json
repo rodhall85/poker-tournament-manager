@@ -1,0 +1,21 @@
+﻿{ 
+  "make": "Volkswagen",
+  "model": "Tiguan",
+  "bodyStyle": "SUV",
+  "derivitive": "TDi Match 4x4 7-Speed",
+  "imageUrl":"http://localhost",
+  "transmission": "Automatic",
+  "fuelType": "Diesel",
+  "insuranceEstimate": "326.00",
+  "quotes": [
+    {
+      "companyName": "Lings Cars",
+      "monthlyPrice": "214.00",
+      "clickthroughUrl": "http://localhost"
+    },
+    {
+      "companyName": "Lings Cars",
+      "monthlyPrice": "214.00",
+      "clickthroughUrl": "http://localhost"
+    }
+  ]}
