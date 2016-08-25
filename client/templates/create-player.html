@@ -1,0 +1,79 @@
+<div class="container">
+  <form name="newPlayer" class="form-horizontal">
+    <div class="row margin-bottom">
+      <div class="col-xs-9">
+        <h4>New Player</h4>
+      </div>
+      <div class="col-xs-3 pull-right">
+        <div class="btn btn-danger pull-right" ng-click="mode = 'list'">Cancel</div>
+      </div>
+    </div>
+    <hr />
+    <div class="row">
+      <div class="col-md-4">
+        <div class="form-group">
+          <input class="form-control" type="text" ng-model="player.name" placeholder="Fullname" required />
+        </div>
+        <div class="form-group">
+          <input class="form-control" type="text" ng-model="player.sex" placeholder="Male/Female" required />
+        </div>
+        <div class="form-group">
+          <input class="form-control" type="date" ng-model="player.dob" placeholder="DD/MM/YYYY" />
+        </div>
+        <div class="form-group">
+          <input class="form-control" type="file" ng-model="player.image" name="ImageData" id="ImageData" onchange="angular.element(this).scope().loadImage(this.files);" />
+        </div>
+        <div class="form-group">
+          <input class="form-control" type="text" ng-model="player.style" placeholder="Player Style e.g. Loose Aggressive" />
+        </div>
+        <div class="form-group">
+          <input class="form-control" type="text" ng-model="player.description" placeholder="Player Description..." />
+        </div>
+        <div class="form-group">
+          <input class="form-control" type="tel" ng-model="player.telephone" placeholder="01234567890" />
+        </div>
+        <div class="form-group">
+          <input class="form-control" type="email" ng-model="player.email" placeholder="name@example.com" />
+        </div>
+      </div>
+      <div class="col-md-8">
+        <div class="panel panel-info">
+          <div class="panel-heading">
+            <h1 class="panel-title">{{player.name}}</h1>
+          </div>
+          <div class="panel-body">
+            <div class="row">
+              <div class="col-md-6">
+                <dl class="dl-horizontal">
+                  <dt class="pad-top-9" ng-hide="player.sex == null">Sex:</dt>
+                  <dd class="well well-sm" ng-hide="player.sex == null">{{player.sex}}</dd>
+                  <dt class="pad-top-9" ng-hide="player.dob == null">Age:</dt>
+                  <dd class="well well-sm" ng-hide="player.dob == null">{{player.dob | ageFilter}}</dd>
+                  <dt class="pad-top-9" ng-hide="player.style == null">Style:</dt>
+                  <dd class="well well-sm" ng-hide="player.style == null">{{player.style}}</dd>
+                  <dt class="pad-top-9" ng-hide="player.description == null">Description:</dt>
+                  <dd class="well well-sm" ng-hide="player.description == null">{{player.description}}</dd>
+                </dl>
+                <div class="pull-right text-right text-info">
+                  <div class="well well-sm" ng-hide="player.telephone == null">{{player.telephone}}</div>
+                  <div class="well well-sm" ng-hide="player.email == null"><a href="mailto://'{{player.email}}'">{{player.email}}</a></div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <img id="player-image" class="img-responsive" src="images/avatar-blank.png" alt="{{player.name}}" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div id="save-player"
+           class="btn btn-success btn-lg btn-block margin-top-bottom no-padding"
+           ng-click="addPlayer(player)"
+           ng-show="newPlayer.$valid">
+           Save
+      </div>
+    </div>
+  </form>
+</div>
