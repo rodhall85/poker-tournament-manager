@@ -2,10 +2,38 @@ import angular from 'angular'
 require('jquery');
 require('bootstrap');
 
-var app = angular.module('ptm', []);
+var app = angular
+  .module('ptm', [])
+  .controller('playerController', ['$http', '$scope', playerController]);
 
-app.controller('playerController',['$http', '$scope', function($http, $scope) {
-  var response = $http.get('/players').then(function(players) {
+function playerController($http, $scope) {
+    $scope.mode = 'list';
+    $scope.setMode = setMode;
+    $scope.deletePlayer = deletePlayer;
+
+    $http.get('/players').then(function(players) {
+      $scope.players = players.data;
+    }, function(err) {
+      console.log(err);
+    });
+
+    function setMode(mode) {
+      $scope.player = $scope.players[0];
+      $scope.mode = mode;
+    }
+
+    function deletePlayer(player) {
+      $http.post('/players/delete', {player: player}).then(function(response) {
+        console.log(response);
+        setMode('list');
+      }, function(err) {
+        console.log(err);
+      })
+    }
+}
+
+/*app.controller('playerController',['$http', '$scope', function($http, $scope) {
+  /*var response = $http.get('/players').then(function(players) {
     $scope.players = players.data;
   }, function(err) {
     console.log(err);
@@ -45,7 +73,7 @@ app.controller('playerController',['$http', '$scope', function($http, $scope) {
       reader.readAsDataURL(file);
     }
   };
-}]);
+}]);*/
 
 app.directive('createPlayer', function() {
   return {
@@ -58,6 +86,13 @@ app.directive('listPlayers', function() {
   return {
     restrict: 'E',
     templateUrl: '../templates/list-players.html'
+  }
+});
+
+app.directive('deletePlayer', function() {
+  return {
+    restrict: 'E',
+    templateUrl: '../templates/delete-player.html'
   }
 });
 

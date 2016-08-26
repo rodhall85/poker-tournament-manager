@@ -1,18 +1,22 @@
 <div class="container">
   <div class="margin-bottom">
-    <div ng-click="mode = 'create'" class="btn btn-info">Create</div>
+    <div ng-click="setMode('create')" class="btn btn-info">Create</div>
   </div>
   <hr />
   <div class="container panel no-padding" ng-repeat="player in players">
     <div class="panel-heading bg-info bright-text">
-    <h3 class="panel-title pull-left">
-        {{player.name}} - {{player.sex}} - {{player.dob}}
-    </h3>
-    <span class="pull-right">
-        <span class="glyphicon glyphicon-edit" aria-hidden="true" ng-click="mode = 'edit'"></span>
-        <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-    </span>
-    <div class="clearfix"></div>
+      <div class="row">
+        <div class="col-xs-9">
+          <h3 class="panel-title pull-left">
+              {{player.name}} - {{player.sex}} - {{player.dob}}
+          </h3>
+        </div>
+        <div class="col-xs-3 pull-right text-right">
+            <div class="glyphicon glyphicon-edit" aria-hidden="true" ng-click="setMode('edit')"></div>
+            <div class="glyphicon glyphicon-trash" aria-hidden="true" ng-click="setMode('delete')"></div>
+        </div>
+      </div>
+      <div class="clearfix"></div>
     </div>
     <div class="panel-body">
         <div class="row">

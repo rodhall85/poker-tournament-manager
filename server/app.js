@@ -35,4 +35,16 @@ app.post('/players/add', (request, response) => {
   }
 });
 
+app.post('/players/delete', (request, response) => {
+  let player = request.body.player;
+  if (player == undefined) {
+    response.sendStatus(400);
+  }
+  else {
+    let players = mongoUtil.players();
+    players.remove({_id: player._id});
+    response.sendStatus(200);
+  }
+});
+
 app.listen(8181, () => console.log("Listening on port 8181"));
