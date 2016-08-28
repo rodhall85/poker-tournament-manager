@@ -1,6 +1,5 @@
 import angular from 'angular'
 require('jquery');
-require('bootstrap');
 
 var app = angular
   .module('ptm', [])
@@ -9,7 +8,9 @@ var app = angular
 function playerController($http, $scope) {
     $scope.mode = 'list';
     $scope.setMode = setMode;
+    $scope.addPlayer = addPlayer;
     $scope.deletePlayer = deletePlayer;
+    $scope.loadImage = loadImage;
 
     $http.get('/players').then(function(players) {
       $scope.players = players.data;
@@ -22,6 +23,18 @@ function playerController($http, $scope) {
       $scope.mode = mode;
     }
 
+
+    function addPlayer(player) {
+      player.image = $('#player-image').attr('src');
+      $http.post('/players/add', {player: player}).success(function(data, status, headers, config) {
+  			console.log(data + " Status: " + status);
+        $scope.players.push(player);
+        $scope.mode = 'list';
+  		}).error(function(data, status, headers, config) {
+  			console.log( "failure message: " + JSON.stringify({data: data}));
+  		});
+    }
+
     function deletePlayer(player) {
       $http.post('/players/delete', {player: player}).then(function(response) {
         console.log(response);
@@ -30,50 +43,27 @@ function playerController($http, $scope) {
         console.log(err);
       })
     }
-}
 
-/*app.controller('playerController',['$http', '$scope', function($http, $scope) {
-  /*var response = $http.get('/players').then(function(players) {
-    $scope.players = players.data;
-  }, function(err) {
-    console.log(err);
-  });
+    function loadImage(files) {
+      for (var i = 0; i < files.length; i++) {
+        var file = files[i];
+        var imageType = /^image\//;
 
-  $scope.mode = 'list';
+        if (!imageType.test(file.type)) {
+          continue;
+        }
 
-  $scope.addPlayer = function(player) {
-    console.log("Adding Player");
-    player.image = $('#player-image').attr('src');
-    $http.post('/players/add', {player: player}).success(function(data, status, headers, config) {
-			console.log(data + " Status: " + status);
-      $scope.players.push(player);
-      $scope.mode = 'list';
-		}).error(function(data, status, headers, config) {
-			console.log( "failure message: " + JSON.stringify({data: data}));
-		});
-  };
-
-  $scope.loadImage = function(files) {
-    console.log("called");
-    for (var i = 0; i < files.length; i++) {
-      var file = files[i];
-      var imageType = /^image\//;
-
-      if (!imageType.test(file.type)) {
-        continue;
+        var img = $('#player-image');
+        var reader = new FileReader();
+        reader.onload = (function(aImg) {
+          return function(e) {
+            aImg.attr('src', e.target.result);
+          };
+        })(img);
+        reader.readAsDataURL(file);
       }
-
-      var img = $('#player-image');
-      var reader = new FileReader();
-      reader.onload = (function(aImg) {
-        return function(e) {
-          aImg.attr('src', e.target.result);
-        };
-      })(img);
-      reader.readAsDataURL(file);
-    }
-  };
-}]);*/
+    };
+}
 
 app.directive('createPlayer', function() {
   return {
