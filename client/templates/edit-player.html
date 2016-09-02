@@ -68,11 +68,11 @@
       </div>
     </div>
     <div class="row">
-      <div id="save-player"
-           class="btn btn-success btn-lg btn-block margin-top-bottom no-padding"
-           ng-click="addPlayer(player)"
-           ng-show="newPlayer.$valid">
-           Save
+      <div id="save-player" class="btn btn-success btn-lg btn-block margin-top-bottom no-padding" ng-click="addPlayer(player)" ng-show="newPlayer.$valid && mode === 'create'">
+           Create
+      </div>
+      <div id="edit-player" class="btn btn-success btn-lg btn-block margin-top-bottom no-padding" ng-click="editPlayer(player)" ng-show="newPlayer.$valid && mode === 'edit'">
+           Update
       </div>
     </div>
   </form>

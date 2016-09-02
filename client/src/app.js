@@ -18,11 +18,10 @@ function playerController($http, $scope) {
       console.log(err);
     });
 
-    function setMode(mode) {
+    function setMode(mode, obj) {
       $scope.player = $scope.players[0];
       $scope.mode = mode;
     }
-
 
     function addPlayer(player) {
       player.image = $('#player-image').attr('src');
@@ -65,10 +64,10 @@ function playerController($http, $scope) {
     };
 }
 
-app.directive('createPlayer', function() {
+app.directive('editPlayer', function() {
   return {
     restrict: 'E',
-    templateUrl: '../templates/create-player.html',
+    templateUrl: '../templates/edit-player.html',
   }
 });
 

@@ -9,12 +9,11 @@ body {
     padding-right: 15px;
 }
 
-
 /* Override the default bootstrap behavior */
 .img-responsive {
     width:100%;
 }
-
+/*-----------------------------------------*/
 
 .dl-horizontal dt {
     white-space: normal;
