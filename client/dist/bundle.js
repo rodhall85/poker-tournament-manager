@@ -21,7 +21,7 @@ function playerController($http, $scope) {
   $http.get('/players').then(function (players) {
     $scope.players = players.data;
   }, function (err) {
-    console.log(err);
+    console.log(err); // eslint-disable-line no-console
   });
 
   function setMode(mode, obj) {
@@ -31,21 +31,23 @@ function playerController($http, $scope) {
 
   function addPlayer(player) {
     player.image = $('#player-image').attr('src');
-    $http.post('/players/add', { player: player }).success(function (data, status, headers, config) {
-      console.log(data + " Status: " + status);
+    $http.post('/players/add', { player: player }).then(success, error(error));
+
+    function success() {
       $scope.players.push(player);
       $scope.mode = 'list';
-    }).error(function (data, status, headers, config) {
-      console.log("failure message: " + JSON.stringify({ data: data }));
-    });
+    }
+
+    function error(error) {
+      console.log('failure message: ' + JSON.stringify({ data: error })); // eslint-disable-line no-console
+    }
   }
 
   function deletePlayer(player) {
-    $http.post('/players/delete', { player: player }).then(function (response) {
-      console.log(response);
+    $http.post('/players/delete', { player: player }).then(function () {
       setMode('list');
     }, function (err) {
-      console.log(err);
+      console.log(err); // eslint-disable-line no-console
     });
   }
 
@@ -59,7 +61,7 @@ function playerController($http, $scope) {
       }
 
       var img = $('#player-image');
-      var reader = new FileReader();
+      var reader = new FileReader(); //eslint-disable-line no-undef
       reader.onload = function (aImg) {
         return function (e) {
           aImg.attr('src', e.target.result);
@@ -67,7 +69,7 @@ function playerController($http, $scope) {
       }(img);
       reader.readAsDataURL(file);
     }
-  };
+  }
 }
 
 app.directive('editPlayer', function () {
